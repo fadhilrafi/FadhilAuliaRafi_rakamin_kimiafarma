@@ -1,0 +1,11 @@
+-- Cara lain untuk menambahkan kolom baru dengan mereplace tabel yang sudah ada, dan menambahkan kolom dibawahnya.
+CREATE OR REPLACE TABLE kimia_farma.tabel_analisa AS
+SELECT
+    ta.*,                                   -- Memilih semua data yang akan di replace dari tabel yang sudah ada
+    kc.rating AS rating_cabang              -- Untuk menambahkan kolom Rating Cabang
+FROM
+    kimia_farma.tabel_analisa ta            -- Penentu sumber data utama dari mana data akan diambil
+JOIN
+    kimia_farma.kf_kantor_cabang kc         -- Klausa JOIN yang digunakan untuk menggabungkan data dari dua tabel
+ON 
+    ta.branch_id = kc.branch_id;            -- Penentu bagiaman ke 2 tabel itu dapat bergabung (Primary & Foreign)
