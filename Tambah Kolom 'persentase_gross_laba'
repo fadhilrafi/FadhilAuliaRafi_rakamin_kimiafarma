@@ -1,0 +1,21 @@
+-- Cara lain untuk menambahkan kolom baru dengan mereplace tabel yang sudah ada, dan menambahkan kolom dibawahnya.
+CREATE OR REPLACE TABLE kimia_farma.tabel_analisa AS
+SELECT
+    --Memilih semua data yang akan di replace dari tabel yang sudah ada
+    ta.*,
+    -- Expresi CASE digunakan untuk menghitung 'persentase_gross_laba' (persentase laba kotor) dari setiap transaksi
+    -- Mengacu pada nilai dari kolom actual_price
+    CASE
+        -- Jika harga kurang dari Rp 50.000 maka persentase laba kotor 10% / 0.1
+        WHEN ta.actual_price <= 50000 THEN 0.1
+        -- Jika harga lebih dari Rp 50.000 dan kurang dari Rp 100.000 maka persentase laba kotor 15% / 0.15
+        WHEN ta.actual_price > 50000 AND ta.actual_price <= 100000 THEN 0.15
+        -- Jika harga lebih dari Rp 100.000 dan kurang dari Rp 300.000 maka persentase laba kotor 20% / 0.2
+        WHEN ta.actual_price > 100000 AND ta.actual_price <= 300000 THEN 0.2
+        -- Jika harga lebih dari Rp 300.000 dan kurang dari Rp 500.000 maka persentase laba kotor 25% / 0.25
+        WHEN ta.actual_price > 300000 AND ta.actual_price <= 500000 THEN 0.25
+        -- Jika harga melebihi Rp 500.000 maka persentase laba kotor akan tetap 30% / 0.3
+        ELSE 0.3
+    END AS persentase_gross_laba
+FROM
+    kimia_farma.tabel_analisa AS ta;    -- Penentuu sumber data utama dari mana data akan diambil
