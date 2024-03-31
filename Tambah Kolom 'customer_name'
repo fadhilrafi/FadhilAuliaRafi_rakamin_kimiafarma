@@ -1,0 +1,11 @@
+-- Cara lain untuk menambahkan kolom baru dengan mereplace tabel yang sudah ada, dan menambahkan kolom di bawah nya.
+CREATE OR REPLACE TABLE kimia_farma.tabel_analisa AS   
+SELECT
+    ta.*,                                       -- Memilih semua data yang akan di replace dari tabel yang sudah ada
+    ft.customer_name                            -- Untuk menambahkan kolom Nama Customer
+FROM
+    kimia_farma.tabel_analisa ta                -- Penentu sumber data utama dari mana data akan diambil
+JOIN
+    kimia_farma.kf_final_transaction ft         -- Klausa JOIN yang digunakan untuk menggabungkan data dari dua tabel
+ON
+    ta.transaction_id = ft.transaction_id;      -- Penentu bagaimana ke 2 tabel itu dapat bergabung (Primary & Foreign)
