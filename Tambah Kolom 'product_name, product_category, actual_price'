@@ -1,0 +1,13 @@
+-- Cara lain untuk menambahkan kolom baru dengan mereplace tabel yang sudah ada, dan menambahkan kolom dibawahnya.
+CREATE OR REPLACE TABLE kimia_farma.tabel_analisa AS
+SELECT
+    ta.*,                                   -- Memilih semua data yang akan di replace dari tabel yang sudah ada
+    p.product_name,                         -- Untuk menambahkan kolom Nama Produk
+    p.product_category,                     -- Untuk menambahkan kolom Kategori Produk
+    p.price as actual_price                 -- Untuk menambhakan kolom Harga
+FROM
+    kimia_farma.tabel_analisa ta            -- Penentu sumber data utama dari mana data akan diambil
+JOIN
+    kimia_farma.kf_product p                -- Klausa JOIN yang digunakan untuk menggabungkan data dari dua tabel
+ON
+    ta.product_id = p.product_id;           -- Penentu bagaimana ke 2 tabel itu dapat bergabung (primary & Foregin)
