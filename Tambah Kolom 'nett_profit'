@@ -1,0 +1,11 @@
+-- Cara lain untuk menambahkan kolom baru dengan mereplace tabel yang sudah ada, dan menambahkan kolom di bawah nya.
+CREATE OR REPLACE TABLE kimia_farma.tabel_analisa AS
+SELECT
+    --Memilih semua data yang akan di replace dari tabel yang sudah ada
+    ta.*,
+    -- Ekspresi untuk menghitung kolom nett_profit dari sebuah transaksi
+    -- Dihitung dengan mengalikan actual_price dengan (1 - (dikurangi) discount_percentage) (angka 1 melambangkan harga asli produk tanpa diskon (100%))
+    -- Dan kemudian dikalikan dengan persentase laba kotor.
+    actual_price * (1 - discount_percentage) * persentase_gross_laba AS nett_profit
+FROM
+    kimia_farma.tabel_analisa ta;       -- Penentu sumber data utama dari mana data akan diambil
