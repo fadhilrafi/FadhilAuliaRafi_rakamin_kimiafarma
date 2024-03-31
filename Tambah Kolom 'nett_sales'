@@ -1,0 +1,14 @@
+-- Cara lain untuk menambahkan kolom baru dengan mereplace tabel yang sudah ada, dan menambahkan kolom di bawah nya.
+CREATE OR REPLACE TABLE kimia_farma.tabel_analisa AS
+SELECT 
+    -- Memilih semua data yang akan di replace dar tabel yang sudah ada
+    ta.*,
+    -- Ekspresi CASE digunakan untuk menghitung 'nett_sales' dari setiap transaksi
+    CASE
+    -- Jika discount_percentage berinilai NULL, maka nett_sales akan sama dengan actual_price
+        WHEN discount_percentage IS NULL THEN actual_price
+    -- Jika discount_percentage tidak NULL, maka nett_sales akan mengurangi actual_price dengan nilai diskon yang diterapkan
+        ELSE actual_price - (actual_price * discount_percentage)
+    END AS nett_sales
+FROM
+    kimia_farma.tabel_analisa AS ta;    --Penentu sumber data utama dari mana data akan diambil
